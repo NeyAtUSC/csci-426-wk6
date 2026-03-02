@@ -118,6 +118,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DebugW"",
+                    ""type"": ""Button"",
+                    ""id"": ""f094e1ce-89da-4af8-a6c0-24539e40b54f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugA"",
+                    ""type"": ""Button"",
+                    ""id"": ""801ba5fb-8160-4e19-980e-0f0747f3ee56"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugS"",
+                    ""type"": ""Button"",
+                    ""id"": ""c405a2d1-e0ec-4c44-bd27-20423e07f003"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugD"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d0b35a1-3fa1-4a64-84e6-0e784a44bc68"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -153,6 +189,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba7cdc77-cca8-4142-a872-9eb3bfcc03fc"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugW"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0de2ad1-3370-4a81-bb14-af5a86d44ef7"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea27698d-f42c-45f6-95e6-d3bc63a3f4a2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugS"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2592c13e-2c36-4aa6-aacd-6fe082344277"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +244,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_DebugW = m_Player.FindAction("DebugW", throwIfNotFound: true);
+        m_Player_DebugA = m_Player.FindAction("DebugA", throwIfNotFound: true);
+        m_Player_DebugS = m_Player.FindAction("DebugS", throwIfNotFound: true);
+        m_Player_DebugD = m_Player.FindAction("DebugD", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -247,6 +331,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_DebugW;
+    private readonly InputAction m_Player_DebugA;
+    private readonly InputAction m_Player_DebugS;
+    private readonly InputAction m_Player_DebugD;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -270,6 +358,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Aim".
         /// </summary>
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DebugW".
+        /// </summary>
+        public InputAction @DebugW => m_Wrapper.m_Player_DebugW;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DebugA".
+        /// </summary>
+        public InputAction @DebugA => m_Wrapper.m_Player_DebugA;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DebugS".
+        /// </summary>
+        public InputAction @DebugS => m_Wrapper.m_Player_DebugS;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/DebugD".
+        /// </summary>
+        public InputAction @DebugD => m_Wrapper.m_Player_DebugD;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -305,6 +409,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @DebugW.started += instance.OnDebugW;
+            @DebugW.performed += instance.OnDebugW;
+            @DebugW.canceled += instance.OnDebugW;
+            @DebugA.started += instance.OnDebugA;
+            @DebugA.performed += instance.OnDebugA;
+            @DebugA.canceled += instance.OnDebugA;
+            @DebugS.started += instance.OnDebugS;
+            @DebugS.performed += instance.OnDebugS;
+            @DebugS.canceled += instance.OnDebugS;
+            @DebugD.started += instance.OnDebugD;
+            @DebugD.performed += instance.OnDebugD;
+            @DebugD.canceled += instance.OnDebugD;
         }
 
         /// <summary>
@@ -325,6 +441,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @DebugW.started -= instance.OnDebugW;
+            @DebugW.performed -= instance.OnDebugW;
+            @DebugW.canceled -= instance.OnDebugW;
+            @DebugA.started -= instance.OnDebugA;
+            @DebugA.performed -= instance.OnDebugA;
+            @DebugA.canceled -= instance.OnDebugA;
+            @DebugS.started -= instance.OnDebugS;
+            @DebugS.performed -= instance.OnDebugS;
+            @DebugS.canceled -= instance.OnDebugS;
+            @DebugD.started -= instance.OnDebugD;
+            @DebugD.performed -= instance.OnDebugD;
+            @DebugD.canceled -= instance.OnDebugD;
         }
 
         /// <summary>
@@ -386,5 +514,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAim(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugW" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugW(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugA" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugA(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugS" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugS(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugD(InputAction.CallbackContext context);
     }
 }
