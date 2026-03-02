@@ -24,8 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 moveDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
         rb.AddForce(moveDirection * moveSpeed, ForceMode.VelocityChange);
-
-        // Clamp XZ velocity
+        
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         if (flatVelocity.magnitude > moveSpeed)
         {
