@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Projectile
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 8334923318093563926, guid: f042ffde2006740bca659abb8c303e1f, type: 3}
   speed: 0

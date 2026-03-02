@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c5e72db277148de9b95d00d88c65bf, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: Assembly-CSharp::Gun
-  defaultBullet: {fileID: 0}
+  defaultBullet: {fileID: 11400000, guid: fc60351bbdec446dfb757c57b691bb6f, type: 2}
   capacity: 8
