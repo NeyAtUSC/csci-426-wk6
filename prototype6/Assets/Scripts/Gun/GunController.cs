@@ -10,4 +10,9 @@ public class GunController : MonoBehaviour
         Bullet bullet = gunData.Fire();
         bullet?.Fire(firePoint);
     }
+
+    public void OnShoot()
+    {
+        TryFire();
+    }
 }

@@ -58,7 +58,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5884040306213479554}
+        m_TargetAssemblyTypeName: GunController, Assembly-CSharp
+        m_MethodName: TryFire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d8ebf890-8db3-481e-b1df-c5aca9bcf6aa
     m_ActionName: 'Player/Shoot[/DualSenseGamepadHID/rightTrigger]'
   - m_PersistentCalls:
@@ -99,7 +111,7 @@ MonoBehaviour:
     m_ActionName: 'Player/DebugD[/Keyboard/d]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 9e755aac-fb37-40ae-9d6f-9151da135190
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1696284482945296796
@@ -144,6 +156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1364181878837082817}
+  - component: {fileID: 5884040306213479554}
   m_Layer: 0
   m_Name: Gun01
   m_TagString: Untagged
@@ -166,6 +179,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859954434013593077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5884040306213479554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829729095757812044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f2b2df36952d546b75defd7baf399b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunController
+  gunData: {fileID: 0}
+  firePoint: {fileID: 1364181878837082817}
 --- !u!1 &1859611376909644329
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56a84992a2c4d24fb281b2077c71760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  gunController: {fileID: 0}
 --- !u!54 &8234301734097152683
 Rigidbody:
   m_ObjectHideFlags: 0
