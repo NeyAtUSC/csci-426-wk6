@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5.0f;
     
     private Vector2 _moveInput;
-    private void OnMove(InputAction.CallbackContext ctx)
+    public void OnMove(InputAction.CallbackContext ctx)
     {
         _moveInput = ctx.ReadValue<Vector2>();
+        Debug.Log(_moveInput.x + " " + _moveInput.y);
     }
 
     private void FixedUpdate()
