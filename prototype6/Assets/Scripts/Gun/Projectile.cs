@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Hitscan", menuName = "Bullets/HitscanBullet")]
+[CreateAssetMenu(fileName = "Projectile", menuName = "Bullets/ProjectileBullet")]
 public class Projectile : Bullet
 {
     public GameObject prefab;

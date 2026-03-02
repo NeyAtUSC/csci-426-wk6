@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "BaseGun", menuName = "Scriptable Objects/BaseGun")]
 public abstract class BaseGun : ScriptableObject
 {
     private static System.Random _rng = new System.Random();
