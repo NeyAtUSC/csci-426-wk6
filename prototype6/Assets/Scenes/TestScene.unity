@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunController
   gunData: {fileID: 11400000, guid: f1499ff5f49b244f0845c4c38789d9db, type: 2}
-  firePoint: {fileID: 165410529}
+  firePoint: {fileID: 1643331991}
 --- !u!4 &165410529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
@@ -673,23 +673,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 4351687922222588541, guid: 201dd064309f84cab923100a3692cadd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -711,6 +711,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 165410527}
   m_SourcePrefab: {fileID: 100100000, guid: 201dd064309f84cab923100a3692cadd, type: 3}
+--- !u!4 &1643331991 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1802682708671767382, guid: 201dd064309f84cab923100a3692cadd, type: 3}
+  m_PrefabInstance: {fileID: 1643331990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
