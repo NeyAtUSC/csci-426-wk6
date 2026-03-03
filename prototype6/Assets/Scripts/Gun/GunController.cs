@@ -30,5 +30,11 @@ public class GunController : MonoBehaviour
         Debug.Log("Reloaded!");
     }
 
+    public void OnLoadGun()
+    {
+        if (gunData == null || gunData.IsReloading) return;
+        StartCoroutine(Reload());
+    }
+
     public void OnShoot() => TryFire();
 }
