@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GunController : MonoBehaviour
@@ -7,12 +8,25 @@ public class GunController : MonoBehaviour
 
     public void TryFire()
     {
+        if (gunData == null || firePoint == null) return;
+        if (gunData.IsReloading) return;
+
         Bullet bullet = gunData.Fire();
         bullet?.Fire(firePoint);
+
+        if (gunData.IsEmpty())
+            StartCoroutine(Reload());
     }
 
-    public void OnShoot()
+    private IEnumerator Reload()
     {
-        TryFire();
+        gunData.SetReloading(true);
+        Debug.Log("Reloading...");
+        yield return new WaitForSeconds(gunData.reloadTime);
+        gunData.Reload(gunData.capacity);
+        gunData.SetReloading(false);
+        Debug.Log("Reloaded!");
     }
+
+    public void OnShoot() => TryFire();
 }
