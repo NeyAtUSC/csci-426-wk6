@@ -27,7 +27,8 @@ public class ProjectileController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"Bullet velocity: {rb.linearVelocity}, Position: {transform.position}");
+        // Track bullet position (disabled to reduce console spam)
+        // Debug.Log($"Bullet velocity: {rb.linearVelocity}, Position: {transform.position}");
     }
 }
 

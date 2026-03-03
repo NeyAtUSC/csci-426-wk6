@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 0
   prefab: {fileID: 8334923318093563926, guid: f042ffde2006740bca659abb8c303e1f, type: 3}
-  speed: 20
+  speed: 10
   muzzleFlashEffect: {fileID: 7083546027630513152, guid: 4c4ac9448d9f9422eb163364fb3e326e, type: 3}
   bulletTrailEffect: {fileID: 5445455433726316600, guid: 2b0f9a448f4f0423886bb6556765833e, type: 3}

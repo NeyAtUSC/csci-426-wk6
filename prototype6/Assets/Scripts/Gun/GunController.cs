@@ -8,10 +8,12 @@ public class GunController : MonoBehaviour
 
     public void TryFire()
     {
+        Debug.Log($"TryFire called - gunData: {gunData != null}, firePoint: {firePoint != null}");
         if (gunData == null || firePoint == null) return;
         if (gunData.IsReloading) return;
 
         Bullet bullet = gunData.Fire();
+        Debug.Log($"Bullet from magazine: {bullet != null}");
         bullet?.Fire(firePoint);
 
         if (gunData.IsEmpty())

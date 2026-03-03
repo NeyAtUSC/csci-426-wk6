@@ -10,6 +10,7 @@ public class Projectile : Bullet
 
     public override void Fire(Transform firePoint)
     {
+        Debug.Log($"Projectile.Fire called - prefab: {prefab != null}, firePoint: {firePoint.position}");
         if (prefab == null) return;
         
         // Spawn muzzle flash effect at gun barrel
@@ -21,12 +22,19 @@ public class Projectile : Bullet
         
         // Spawn bullet
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
+        Debug.Log($"Projectile spawned at {firePoint.position}");
         
         // Attach trail effect to bullet
         if (bulletTrailEffect != null)
         {
             GameObject trail = Instantiate(bulletTrailEffect, proj.transform);
             trail.transform.localPosition = Vector3.zero;
+            trail.transform.localRotation = Quaternion.identity;
+            Debug.Log($"Bullet trail spawned: {trail.name}");
+        }
+        else
+        {
+            Debug.Log("No bullet trail effect assigned");
         }
         
         // Use 2D physics for 2D game
