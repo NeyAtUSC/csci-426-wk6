@@ -1871,6 +1871,13 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1928086444}
   gameOverText: {fileID: 464372224}
   winnerText: {fileID: 592209630}
+  roundDuration: 120
+  timerText: {fileID: 0}
+  normalTimerColor: {r: 1, g: 1, b: 1, a: 1}
+  warningTimerColor: {r: 0.95, g: 0.25, b: 0.25, a: 1}
+  warningThreshold: 30
+  player1Health: {fileID: 0}
+  player2Health: {fileID: 0}
 --- !u!1 &1634832700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,6 +1965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 7769384621347739864, guid: 201dd064309f84cab923100a3692cadd, type: 3}
+      propertyPath: gunDryFireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: cf03bb8d04d4fd34eb69012593b0636b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

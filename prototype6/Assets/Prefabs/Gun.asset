@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: Assembly-CSharp::Gun
   defaultBullet: {fileID: 11400000, guid: fc60351bbdec446dfb757c57b691bb6f, type: 2}
-  capacity: 8
+  attackSpeed: 1
+  capacity: 6
+  reloadTime: 2

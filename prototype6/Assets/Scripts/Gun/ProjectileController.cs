@@ -1,82 +1,43 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody))]
 public class ProjectileController : MonoBehaviour
 {
-    public float lifetime = 5f; // Auto-destroy after 5 seconds
-    public float damage = 10f; // Damage dealt on hit
-    private Rigidbody2D rb;
-    private int ownerPlayerNumber = 0; // Track who fired this bullet
-    
+    public float lifetime = 5f;
+    public int damage = 1;
+    private Rigidbody _rb;
+    private int _ownerPlayerNumber = 0;
+    private bool _hasHit = false;
+
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        
-        // Ensure proper 2D physics setup
-        rb.gravityScale = 0f;
-        rb.linearDamping = 0f;
-        rb.angularDamping = 0f;
-        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        
-        Debug.Log($"Bullet spawned - Gravity: {rb.gravityScale}, Velocity will be set by Projectile.Fire()");
+        _rb = GetComponent<Rigidbody>();
+        _rb.useGravity = false;
+        _rb.linearDamping = 0f;
+        _rb.angularDamping = 0f;
+        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
-    
+
     void Start()
     {
-        // Destroy bullet after lifetime expires
         Destroy(gameObject, lifetime);
     }
 
-    void Update()
-    {
-        // Track bullet position (disabled to reduce console spam)
-        // Debug.Log($"Bullet velocity: {rb.linearVelocity}, Position: {transform.position}");
-    }
+    public void SetOwner(int playerNumber) => _ownerPlayerNumber = playerNumber;
+    public void SetDamage(int damageAmount) => damage = damageAmount;
 
-    public void SetOwner(int playerNumber)
+    private void OnCollisionEnter(Collision collision)
     {
-        ownerPlayerNumber = playerNumber;
-    }
+        if (_hasHit) return;
+        _hasHit = true;
 
-    public void SetDamage(float damageAmount)
-    {
-        damage = damageAmount;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Check if we hit a player
+        Debug.Log($"[Projectile] OnCollisionEnter hit: {collision.gameObject.name}");
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
+        if (playerHealth != null && playerHealth.playerNumber != _ownerPlayerNumber)
         {
-            // Don't let players damage themselves
-            if (playerHealth.playerNumber != ownerPlayerNumber)
-            {
-                playerHealth.TakeDamage(damage);
-                Debug.Log($"Bullet hit Player {playerHealth.playerNumber} for {damage} damage!");
-            }
+            playerHealth.TakeDamage(damage);
+            Debug.Log($"[Projectile] Hit Player {playerHealth.playerNumber} for {damage} damage!");
         }
-
-        // Destroy bullet on any collision
-        Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Check if we hit a player (for trigger colliders)
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
-        {
-            // Don't let players damage themselves
-            if (playerHealth.playerNumber != ownerPlayerNumber)
-            {
-                playerHealth.TakeDamage(damage);
-                Debug.Log($"Bullet hit Player {playerHealth.playerNumber} for {damage} damage!");
-            }
-        }
-
-        // Destroy bullet on any collision
         Destroy(gameObject);
     }
 }
-

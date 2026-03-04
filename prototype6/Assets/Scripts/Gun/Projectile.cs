@@ -4,57 +4,48 @@ using UnityEngine;
 public class Projectile : Bullet
 {
     public GameObject prefab;
-    public float speed = 25f; // Default high speed for projectile
-    public GameObject muzzleFlashEffect; // Particle effect at gun barrel
-    public GameObject bulletTrailEffect; // Trail effect attached to bullet
+    public float speed = 500f;
+    public GameObject muzzleFlashEffect;
+    public GameObject bulletTrailEffect;
 
     public override void Fire(Transform firePoint)
     {
-        Debug.Log($"Projectile.Fire called - prefab: {prefab != null}, firePoint: {firePoint.position}");
         if (prefab == null) return;
-        
-        // Spawn muzzle flash effect at gun barrel
+
         if (muzzleFlashEffect != null)
         {
             GameObject flash = Instantiate(muzzleFlashEffect, firePoint.position, firePoint.rotation);
-            Destroy(flash, 2f); // Auto-destroy after 2 seconds
+            Destroy(flash, 2f);
         }
-        
-        // Spawn bullet
+
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
-        Debug.Log($"Projectile spawned at {firePoint.position}");
-        
-        // Set damage and owner on projectile
+
         if (proj.TryGetComponent<ProjectileController>(out var projController))
         {
             projController.SetDamage(damage);
             projController.SetOwner(ownerPlayerNumber);
+    
+            // Ignore collision with the owner player
+            Collider projCollider = proj.GetComponent<Collider>();
+            Collider ownerCollider = firePoint.GetComponentInParent<Collider>();
+            if (projCollider != null && ownerCollider != null)
+                Physics.IgnoreCollision(projCollider, ownerCollider);
         }
-        
-        // Attach trail effect to bullet
+
         if (bulletTrailEffect != null)
         {
             GameObject trail = Instantiate(bulletTrailEffect, proj.transform);
             trail.transform.localPosition = Vector3.zero;
             trail.transform.localRotation = Quaternion.identity;
-            Debug.Log($"Bullet trail spawned: {trail.name}");
         }
-        else
+
+        if (proj.TryGetComponent<Rigidbody>(out var rb))
         {
-            Debug.Log("No bullet trail effect assigned");
-        }
-        
-        // Use 2D physics for 2D game
-        if (proj.TryGetComponent<Rigidbody2D>(out var rb2d))
-        {
-            rb2d.gravityScale = 0f; // Disable gravity for straight bullet travel
-            rb2d.linearDamping = 0f; // No drag
-            
-            // In 2D, use right direction (assumes gun sprite faces right)
-            Vector2 direction = firePoint.right;
-            rb2d.linearVelocity = direction * speed;
-            
-            Debug.Log($"Bullet fired at speed {speed} in direction {direction}");
+            rb.useGravity = false;
+            rb.linearDamping = 0f;
+            // Use forward direction in 3D — firePoint should face the aim direction
+            rb.linearVelocity = firePoint.forward * speed;
+            Debug.Log($"Bullet fired at speed {speed} in direction {firePoint.forward}");
         }
     }
 }

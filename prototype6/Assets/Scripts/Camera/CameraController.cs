@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        Vector3 before = transform.position;
         if (!pOneTransform || !pTwoTransform) return;
         MoveToCenter();
         ZoomToFit();

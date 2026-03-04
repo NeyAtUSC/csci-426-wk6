@@ -5,46 +5,61 @@ public class GunController : MonoBehaviour
 {
     public BaseGun gunData;
     public Transform firePoint;
+    public ChamberHUD hud;
     
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip gunFireSound;
+    public AudioClip gunDryFireSound;
+    public AudioClip gunReloadSound;
     
-    private int ownerPlayerNumber = 0;
+    private int _ownerPlayerNumber = 0;
 
+    private void Awake()
+    {
+        gunData = Instantiate(gunData);
+    }
+    
     public void TryFire()
     {
-        Debug.Log($"TryFire called - gunData: {gunData != null}, firePoint: {firePoint != null}");
         if (gunData == null || firePoint == null) return;
         if (gunData.IsReloading) return;
+        if (gunData.IsOnCooldown()) return;
 
         Bullet bullet = gunData.Fire();
-        Debug.Log($"Bullet from magazine: {bullet != null}");
-        
+
         if (bullet != null)
         {
-            // Play gun fire sound
             if (audioSource != null && gunFireSound != null)
-            {
                 audioSource.PlayOneShot(gunFireSound);
-            }
-            
-            bullet.SetOwner(ownerPlayerNumber);
+
+            bullet.SetOwner(_ownerPlayerNumber);
             bullet.Fire(firePoint);
         }
+        else
+        {
+            if (audioSource != null && gunDryFireSound != null)
+                audioSource.PlayOneShot(gunDryFireSound);
+        }
 
-        if (gunData.IsEmpty())
+        Debug.Log($"[GunController] About to call hud.OnChamberFired — hud is null: {hud == null}");
+        hud?.OnChamberFired(bullet != null);
+
+        if (gunData.IsCylinderSpent())
             StartCoroutine(Reload());
     }
 
     private IEnumerator Reload()
     {
         gunData.SetReloading(true);
-        Debug.Log("Reloading...");
+        hud?.OnReloadStart(gunData.reloadTime);
+    
+        if (audioSource != null && gunReloadSound != null)
+            audioSource.PlayOneShot(gunReloadSound);
+    
         yield return new WaitForSeconds(gunData.reloadTime);
-        gunData.Reload(gunData.capacity);
+        gunData.Reload();
         gunData.SetReloading(false);
-        Debug.Log("Reloaded!");
     }
 
     public void OnLoadGun()
@@ -57,6 +72,6 @@ public class GunController : MonoBehaviour
 
     public void SetOwner(int playerNumber)
     {
-        ownerPlayerNumber = playerNumber;
+        _ownerPlayerNumber = playerNumber;
     }
 }

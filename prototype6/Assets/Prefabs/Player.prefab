@@ -90,7 +90,19 @@ MonoBehaviour:
     m_ActionId: cf27542c-57bf-4b56-947d-7964654c81d5
     m_ActionName: 'Player/Move[/DualSenseGamepadHID/leftStick]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: AimReticle, Assembly-CSharp
+        m_MethodName: OnAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c9a90fc0-862f-4ad3-9224-4d20c162fe25
     m_ActionName: 'Player/Aim[/DualSenseGamepadHID/rightStick]'
   - m_PersistentCalls:
@@ -193,6 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunController
   gunData: {fileID: 0}
   firePoint: {fileID: 1364181878837082817}
+  hud: {fileID: 0}
+  audioSource: {fileID: 0}
+  gunFireSound: {fileID: 0}
+  gunDryFireSound: {fileID: 0}
+  gunReloadSound: {fileID: 0}
 --- !u!1 &1859611376909644329
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,6 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6348232879767580225}
+  - component: {fileID: 5421203435192675899}
   m_Layer: 0
   m_Name: EnvironmentCollider
   m_TagString: Untagged
@@ -251,11 +269,34 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6061868641153951278}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5421203435192675899
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348400832265687079}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4278909798237152334
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56a84992a2c4d24fb281b2077c71760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  gunController: {fileID: 0}
+  gunController: {fileID: 5884040306213479554}
+  hud: {fileID: 0}
+  aimReticle: {fileID: 0}
+  playerNumber: 1
 --- !u!54 &8234301734097152683
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -422,7 +466,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &6231008504160895787
 MonoBehaviour:
@@ -436,9 +480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e9583edd3984afea3c07db7cdb11d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
-  currentHealth: 0
-  playerNumber: 2
+  maxHealth: 3
+  currentHealth: 3
+  playerNumber: 1
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -454,6 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8182081987975611851}
+  - component: {fileID: 5484324476155792178}
   m_Layer: 0
   m_Name: HitboxCollider
   m_TagString: Untagged
@@ -470,12 +515,35 @@ Transform:
   m_GameObject: {fileID: 5065331165916117138}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.35355, y: -0.24749, z: -0.35355}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9, y: 2, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6061868641153951278}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5484324476155792178
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5065331165916117138}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5529435445880429756
 GameObject:
   m_ObjectHideFlags: 0
