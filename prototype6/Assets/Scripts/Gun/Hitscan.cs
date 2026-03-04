@@ -10,7 +10,12 @@ public class Hitscan : Bullet
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range))
         {
             Debug.Log($"Hit {hit.collider.name} for {damage} damage");
-            // hit.collider.GetComponent<Health>()?.TakeDamage(damage);
+            
+            PlayerHealth playerHealth = hit.collider.GetComponent<PlayerHealth>();
+            if (playerHealth != null && playerHealth.playerNumber != ownerPlayerNumber)
+            {
+                playerHealth.TakeDamage(damage);
+            }
         }
     }
 }

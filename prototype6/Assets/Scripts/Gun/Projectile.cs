@@ -24,6 +24,13 @@ public class Projectile : Bullet
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
         Debug.Log($"Projectile spawned at {firePoint.position}");
         
+        // Set damage and owner on projectile
+        if (proj.TryGetComponent<ProjectileController>(out var projController))
+        {
+            projController.SetDamage(damage);
+            projController.SetOwner(ownerPlayerNumber);
+        }
+        
         // Attach trail effect to bullet
         if (bulletTrailEffect != null)
         {

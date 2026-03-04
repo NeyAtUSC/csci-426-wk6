@@ -5,6 +5,12 @@ public class GunController : MonoBehaviour
 {
     public BaseGun gunData;
     public Transform firePoint;
+    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip gunFireSound;
+    
+    private int ownerPlayerNumber = 0;
 
     public void TryFire()
     {
@@ -14,7 +20,18 @@ public class GunController : MonoBehaviour
 
         Bullet bullet = gunData.Fire();
         Debug.Log($"Bullet from magazine: {bullet != null}");
-        bullet?.Fire(firePoint);
+        
+        if (bullet != null)
+        {
+            // Play gun fire sound
+            if (audioSource != null && gunFireSound != null)
+            {
+                audioSource.PlayOneShot(gunFireSound);
+            }
+            
+            bullet.SetOwner(ownerPlayerNumber);
+            bullet.Fire(firePoint);
+        }
 
         if (gunData.IsEmpty())
             StartCoroutine(Reload());
@@ -37,4 +54,9 @@ public class GunController : MonoBehaviour
     }
 
     public void OnShoot() => TryFire();
+
+    public void SetOwner(int playerNumber)
+    {
+        ownerPlayerNumber = playerNumber;
+    }
 }

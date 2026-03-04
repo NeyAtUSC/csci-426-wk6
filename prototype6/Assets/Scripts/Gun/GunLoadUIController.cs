@@ -10,7 +10,6 @@ public class GunLoadUIController : MonoBehaviour
     public TMP_Text loadGunText;
     public RectTransform bulletUI;
     public RectTransform gunBarrelUI;
-    public RectTransform bulletTargetUI; // Empty GameObject marking bullet target position
 
     [Header("Gun References")]
     public GunController gunController;
@@ -20,6 +19,11 @@ public class GunLoadUIController : MonoBehaviour
     public float barrelSpinDuration = 2f;
     public float barrelSpinSpeed = 900f;
     public bool hideBulletAfterLoad = true;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip barrelSpinSound;
+    public AudioClip loadClickSound;
 
     private bool _isAnimating;
     private bool _hasCachedInitialState;
@@ -67,28 +71,18 @@ public class GunLoadUIController : MonoBehaviour
         if (gunBarrelUI != null)
             gunBarrelUI.gameObject.SetActive(true);
 
-        // Move bullet to target
+        // Move bullet left by 65 on X
         if (bulletUI != null)
         {
             var startPos = bulletUI.anchoredPosition;
-            
-            // Determine target: use bulletTargetUI if set, otherwise fall back to gunBarrelUI
-            RectTransform targetRect = bulletTargetUI != null ? bulletTargetUI : gunBarrelUI;
-            
-            if (targetRect == null)
-            {
-                Debug.LogError("GunLoadUIController: Both bulletTargetUI and gunBarrelUI are null! Bullet will not move.");
-                yield break;
-            }
-            
-            var targetPos = targetRect.anchoredPosition;
-            Debug.Log($"Moving bullet from {startPos} to {targetPos} (using {(bulletTargetUI != null ? "bulletTargetUI" : "gunBarrelUI")})");
+            var targetPos = new Vector2(startPos.x - 65f, startPos.y);
+            var effectiveMoveDuration = Mathf.Max(0.01f, bulletMoveDuration * 0.5f);
             var elapsed = 0f;
 
-            while (elapsed < bulletMoveDuration)
+            while (elapsed < effectiveMoveDuration)
             {
                 elapsed += Time.deltaTime;
-                var t = bulletMoveDuration <= 0f ? 1f : Mathf.Clamp01(elapsed / bulletMoveDuration);
+                var t = Mathf.Clamp01(elapsed / effectiveMoveDuration);
                 bulletUI.anchoredPosition = Vector2.Lerp(startPos, targetPos, t);
                 yield return null;
             }
@@ -98,6 +92,12 @@ public class GunLoadUIController : MonoBehaviour
 
         if (gunBarrelUI != null)
         {
+            // Play barrel spin sound
+            if (audioSource != null && barrelSpinSound != null)
+            {
+                audioSource.PlayOneShot(barrelSpinSound);
+            }
+            
             var elapsed = 0f;
             
             while (elapsed < barrelSpinDuration)
@@ -117,6 +117,12 @@ public class GunLoadUIController : MonoBehaviour
 
         if (hideBulletAfterLoad && bulletUI != null)
             bulletUI.gameObject.SetActive(false);
+
+        // Play load click sound after loading finishes
+        if (audioSource != null && loadClickSound != null)
+        {
+            audioSource.PlayOneShot(loadClickSound);
+        }
 
         if (loadGunButton != null)
             loadGunButton.interactable = true;
